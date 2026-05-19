@@ -2,12 +2,33 @@ import { motion } from 'framer-motion';
 
 export default function About() {
   return (
-    <div className="max-w-7xl mx-auto px-6 py-24 md:py-32">
+    <div className="relative max-w-7xl mx-auto px-6 py-24 md:py-32 overflow-hidden">
+      {/* Poetic Pen & Paper Background */}
+      <div 
+        className="absolute inset-0 z-0 opacity-15 pointer-events-none"
+        style={{
+          backgroundImage: `url('/pen-paper-bg.jpg')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      />
+      
+      {/* Optional: Overlay pattern for poetic feel */}
+      <div 
+        className="absolute inset-0 z-0 opacity-5 pointer-events-none"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='none' stroke='%236b21a8' stroke-width='0.5' d='M20,20 L80,20 M20,30 L80,30 M20,40 L80,40 M20,50 L80,50 M20,60 L80,60 M20,70 L80,70 M20,80 L80,80'/%3E%3C/svg%3E")`,
+          backgroundRepeat: 'repeat',
+          backgroundSize: '30px 30px',
+        }}
+      />
+
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="space-y-16"
+        className="relative z-10 space-y-16"
       >
         {/* Header Section - Full Width */}
         <div className="text-center space-y-6 max-w-4xl mx-auto">
@@ -20,7 +41,7 @@ export default function About() {
         <div className="w-full h-px bg-borderLight/50 max-w-6xl mx-auto"></div>
 
         {/* Featured Writer Section - Image Left, Text Right, Full Width */}
-        <div className="w-full bg-backgroundLight/30 rounded-2xl p-8 md:p-12">
+        <div className="w-full bg-backgroundLight/30 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-white/20 shadow-xl">
           <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
             {/* Image - Left Side */}
             <div className="flex justify-center md:justify-end">
@@ -34,7 +55,7 @@ export default function About() {
             {/* Text - Right Side */}
             <div className="space-y-6">
               <div className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm rounded-full font-medium">
-              
+               
               </div>
               <h2 className="font-heading text-4xl md:text-5xl text-primaryText">Prakash Pant</h2>
               <p className="text-primary text-lg md:text-xl font-medium">Poet & Writer</p>
@@ -45,16 +66,13 @@ export default function About() {
                 <p>
                   With words that bleed honesty and metaphors that linger long after the page is turned, Prakash has established himself as one of the most compelling literary voices of his generation. His work transcends boundaries, touching hearts across cultures and continents.
                 </p>
-                <p>
-                
-                </p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Philosophy Section - Horizontally Extended */}
-        <div className="space-y-8 font-body font-light text-secondaryText leading-relaxed md:text-lg max-w-6xl mx-auto">
+        <div className="space-y-8 font-body font-light text-secondaryText leading-relaxed md:text-lg max-w-6xl mx-auto bg-white/40 backdrop-blur-sm p-8 rounded-2xl border border-white/20">
           <p className="text-xl">
             We are a digital sanctuary designed for the modern reader and thinker. Our platform strips away the neon distractions of the internet to provide a calm, minimalist environment where ideas can breathe.
           </p>

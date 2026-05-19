@@ -1,45 +1,35 @@
 import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { BRAND_LINKS } from '../../utils/constants';
 
 export default function YoutubeSlider() {
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
-
-  // Subtle parallax effect on the background shapes
-  const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
+  const scrollRef = useRef(null);
 
   const videos = [
-    { id: '1', title: 'The Philosophy of Modern Writing', category: 'Literature' },
-    { id: '2', title: 'Why We Read: A Deep Dive into Escapism', category: 'Thought' },
-    { id: '3', title: 'The Solitude of the Author', category: 'Motivation' },
-    { id: '4', title: 'Poetry in the Digital Age', category: 'Poetry' },
+    { id: '1', title: 'The Philosophy of Modern Writing', category: 'Literature', image: 'https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=600&q=80' },
+    { id: '2', title: 'Why We Read: A Deep Dive into Escapism', category: 'Thought', image: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=600&q=80' },
+    { id: '3', title: 'The Solitude of the Author', category: 'Motivation', image: 'https://images.unsplash.com/photo-1463320726281-696a485928c7?auto=format&fit=crop&w=600&q=80' },
   ];
 
   return (
-    <section ref={containerRef} className="relative w-full py-32 bg-secondaryBg overflow-hidden">
-      {/* Decorative background element */}
-      <motion.div 
-        style={{ y }} 
-        className="absolute top-0 right-0 w-96 h-96 bg-primaryBg rounded-full mix-blend-multiply filter blur-3xl opacity-50 pointer-events-none" 
-      />
-
-      <div className="px-6 lg:px-12 max-w-7xl mx-auto relative z-10">
+    <section className="relative w-full py-24 bg-[#E5D9C5]/30 border-y border-[#D4C4A8]">
+      <div className="px-6 lg:px-12 max-w-7xl mx-auto">
+        
         <div className="flex justify-between items-end mb-12">
           <div>
-            <h2 className="font-heading text-4xl text-primaryText">Visual Storytelling</h2>
-            <p className="text-secondaryText mt-2 font-light text-lg">Latest from our channel.</p>
+            <h2 className="font-heading text-4xl md:text-5xl text-[#2D241E] font-bold">Visual Storytelling</h2>
+            <p className="text-[#7A3B3B] mt-2 font-body text-lg italic">Cinematic poetry and discussions.</p>
           </div>
-          <a href={BRAND_LINKS.YOUTUBE} target="_blank" rel="noreferrer" className="text-sm uppercase tracking-widest text-bronze border-b border-transparent hover:border-bronze transition-all pb-1">
-            Subscribe →
+          <a href={BRAND_LINKS.YOUTUBE} target="_blank" rel="noreferrer" className="hidden md:block text-sm uppercase tracking-widest text-[#B67332] hover:text-[#7A3B3B] transition-colors font-semibold">
+            Subscribe Channel →
           </a>
         </div>
         
         {/* Horizontal Slider */}
-        <div className="flex gap-6 overflow-x-auto pb-8 snap-x snap-mandatory hide-scrollbar">
+        <div 
+          ref={scrollRef}
+          className="flex gap-8 overflow-x-auto pb-8 snap-x snap-mandatory hide-scrollbar"
+        >
           {videos.map((video) => (
             <motion.a 
               href={BRAND_LINKS.YOUTUBE} 
@@ -47,24 +37,28 @@ export default function YoutubeSlider() {
               rel="noreferrer"
               key={video.id}
               whileHover={{ y: -5 }}
-              className="min-w-[300px] md:min-w-[400px] snap-center bg-card rounded-sm overflow-hidden shadow-sm hover:shadow-elegant border border-borderLight/30 cursor-pointer group flex-shrink-0"
+              className="min-w-[300px] md:min-w-[450px] snap-center bg-white rounded-sm overflow-hidden shadow-md hover:shadow-[0_15px_30px_rgba(45,36,30,0.1)] border border-[#E3DCD2] cursor-pointer group flex-shrink-0"
             >
-              <div className="w-full aspect-video bg-borderLight relative overflow-hidden flex items-center justify-center">
-                 {/* Placeholder for YT Thumbnail */}
-                 <div className="absolute inset-0 bg-primaryText/10 group-hover:bg-transparent transition-all duration-500"></div>
-                 <svg className="w-12 h-12 text-white/70 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24">
-                   <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
-                 </svg>
+              <div className="w-full aspect-video relative overflow-hidden flex items-center justify-center bg-[#2D241E]">
+                 <img src={video.image} alt={video.title} className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-700" />
+                 
+                 {/* Play Button Icon */}
+                 <div className="relative z-10 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:bg-[#B67332]/80 transition-colors duration-300 border border-white/50">
+                    <svg className="w-5 h-5 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                 </div>
               </div>
               <div className="p-6">
-                <span className="text-xs text-softAccent uppercase tracking-widest mb-2 block">{video.category}</span>
-                <h4 className="font-heading text-xl text-primaryText mb-3 group-hover:text-bronze transition-colors line-clamp-2">
+                <span className="text-[10px] text-[#B67332] font-bold uppercase tracking-widest mb-2 block">{video.category}</span>
+                <h4 className="font-heading text-xl md:text-2xl text-[#2D241E] mb-2 font-bold group-hover:text-[#7A3B3B] transition-colors line-clamp-2">
                   {video.title}
                 </h4>
               </div>
             </motion.a>
           ))}
         </div>
+
       </div>
     </section>
   );
